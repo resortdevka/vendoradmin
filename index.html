@@ -1059,6 +1059,10 @@ function attachLoginEvents(){
         };
         sessionStorage.setItem("devka_admin_session", JSON.stringify(session));
         showToast("Firebase Authentication verified! Welcome back.", "success");
+        // Reset Firestore listener so it reconnects as authenticated admin user
+        if (window.VendorDB) {
+          window.VendorDB.firestoreListenerAttached = false;
+        }
         await refreshVendors();
         render();
       } else {
