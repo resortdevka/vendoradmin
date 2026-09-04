@@ -1,0 +1,24 @@
+name: Supabase Keep-Alive Ping
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every 4 days to prevent Supabase 7-day free tier auto-pause
+    - cron: '0 0 */4 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: sb_publishable_JKuW6VUTEqum0wXajelAhg_860ILUgW" \
+            -H "Authorization: Bearer sb_publishable_JKuW6VUTEqum0wXajelAhg_860ILUgW" \
+            "https://ikxrmrurtgwycagkrlxd.supabase.co/rest/v1/vendors?limit=1")
+          echo "Supabase responded with HTTP $RESPONSE"
+          if [ "$RESPONSE" -ge 200 ] && [ "$RESPONSE" -lt 500 ]; then
+            echo "Keep-alive ping successful!"
+          else
+            echo "Warning: Unexpected response status $RESPONSE"
+          fi
