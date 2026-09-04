@@ -402,9 +402,7 @@
 <body>
 <div id="admin-app"></div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="devka-config.js"></script>
 <script src="vendor-db.js"></script>
 <script>
@@ -1044,7 +1042,7 @@ function attachLoginEvents(){
 
     if(btn){
       btn.disabled = true;
-      btn.innerHTML = '<span class="sync-dot"></span> Authenticating with Firebase...';
+      btn.innerHTML = '<span class="sync-dot"></span> Authenticating...';
     }
     if(err) err.style.display = "none";
 
@@ -1058,13 +1056,9 @@ function attachLoginEvents(){
           loggedInAt: Date.now()
         };
         sessionStorage.setItem("devka_admin_session", JSON.stringify(session));
-        showToast("Firebase Authentication verified! Welcome back.", "success");
-        // Reset Firestore listener so it reconnects as authenticated admin user
-        if (window.VendorDB) {
-          window.VendorDB.firestoreListenerAttached = false;
-          if (typeof window.VendorDB.connectCloudSync === "function") {
-            window.VendorDB.connectCloudSync();
-          }
+        showToast("Admin Authentication verified! Welcome back.", "success");
+        if (window.VendorDB && typeof window.VendorDB.connectCloudSync === "function") {
+          window.VendorDB.connectCloudSync();
         }
         await refreshVendors();
         render();
@@ -1072,7 +1066,7 @@ function attachLoginEvents(){
         throw new Error("Cloud security module is initializing. Please try again in a moment.");
       }
     } catch(authErr){
-      console.warn("Firebase Auth failed:", authErr.message);
+      console.warn("Admin Auth failed:", authErr.message);
       if(err){
         err.textContent = authErr.message || "Invalid Admin credentials.";
         err.style.display = "block";
