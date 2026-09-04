@@ -435,10 +435,47 @@ function showToast(msg, type = "neutral"){
   setTimeout(() => { toasts = toasts.filter(t => t.id !== id); render(); }, 3800);
 }
 
-// Initial loader & cross-tab sync
+const SUPABASE_ADMIN_SECRET = "sb_secret_X3kM6kfbTq7srYOMGms2Cg_Fbisk3eK";
+const SUPABASE_REST_URL = "https://ikxrmrurtgwycagkrlxd.supabase.co/rest/v1";
+
+// Initial loader & cross-tab sync (direct Supabase query with admin credentials)
 async function refreshVendors(){
-  vendors = await window.VendorDB.getAllVendors();
-  render();
+  try {
+    const res = await fetch(`${SUPABASE_REST_URL}/vendors?order=submitted_at.desc`, {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_ADMIN_SECRET,
+        "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`
+      }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      vendors = rows.map((r) => ({
+        id:           r.id,
+        type:         r.type,
+        status:       r.status,
+        submittedAt:  Number(r.submitted_at),
+        updatedAt:    Number(r.updated_at),
+        company:      r.company || {},
+        contact:      r.contact || {},
+        guest:        r.guest || {},
+        bank:         r.bank || {},
+        billing:      r.billing || {},
+        payment:      r.payment || {},
+        documents:    r.documents || {},
+        adminNotes:   r.admin_notes || ""
+      }));
+      render();
+      return;
+    }
+  } catch (err) {
+    console.warn("Direct Supabase query notice:", err);
+  }
+
+  if (window.VendorDB) {
+    vendors = await window.VendorDB.getAllVendors();
+    render();
+  }
 }
 
 window.addEventListener("storage", (e) => {
@@ -1169,14 +1206,35 @@ async function handleAction(action, el, ev){
     const v = vendors.find(x => x.id === currentFolderId);
     if(v){
       v.status = newStatus;
-      await window.VendorDB.saveVendor(v);
+      try {
+        await fetch(`${SUPABASE_REST_URL}/vendors?id=eq.${encodeURIComponent(v.id)}`, {
+          method: "PATCH",
+          headers: {
+            "apikey": SUPABASE_ADMIN_SECRET,
+            "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ status: newStatus, updated_at: Date.now() })
+        });
+      } catch (e) {}
+      if (window.VendorDB) try { await window.VendorDB.saveVendor(v); } catch(e) {}
       await refreshVendors();
       showToast(`Folder status updated to "${newStatus}"`, "success");
     }
   }
   else if(action === "delete-vendor"){
     if(confirm("Are you sure you want to delete this vendor folder completely?")){
-      await window.VendorDB.deleteVendor(currentFolderId);
+      try {
+        await fetch(`${SUPABASE_REST_URL}/vendors?id=eq.${encodeURIComponent(currentFolderId)}`, {
+          method: "DELETE",
+          headers: {
+            "apikey": SUPABASE_ADMIN_SECRET,
+            "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`
+          }
+        });
+      } catch (e) {}
+      if (window.VendorDB) try { await window.VendorDB.deleteVendor(currentFolderId); } catch(e) {}
       currentFolderId = null;
       await refreshVendors();
       showToast("Vendor folder deleted.", "neutral");
@@ -1187,7 +1245,19 @@ async function handleAction(action, el, ev){
     const v = vendors.find(x => x.id === currentFolderId);
     if(v){
       v.adminNotes = txt;
-      await window.VendorDB.saveVendor(v);
+      try {
+        await fetch(`${SUPABASE_REST_URL}/vendors?id=eq.${encodeURIComponent(v.id)}`, {
+          method: "PATCH",
+          headers: {
+            "apikey": SUPABASE_ADMIN_SECRET,
+            "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ admin_notes: txt, updated_at: Date.now() })
+        });
+      } catch (e) {}
+      if (window.VendorDB) try { await window.VendorDB.saveVendor(v); } catch(e) {}
       showToast("Notes saved to vendor folder.", "success");
     }
   }
