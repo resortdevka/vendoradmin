@@ -1,504 +1,988 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Admin Vendor — Devka Beach Resort</title>
-<link rel="icon" type="image/png" href="LOGO.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-<style>
-  :root{
-    --navy:#0B1F3A;
-    --navy-deep:#071527;
-    --navy-soft:#122A4D;
-    --gold:#C6A15B;
-    --gold-soft:#E4D3A6;
-    --gold-dim:#9c814a;
-    --gold-light:#F7F2E7;
-    --cream:#F8F5EE;
-    --white:#FFFFFF;
-    --ink:#17222E;
-    --muted:#5B6B7C;
-    --success:#2F6F4E;
-    --success-bg:#EAF3EC;
-    --error:#A63A2C;
-    --error-bg:#FBEAE6;
-    --border:#E2DAC5;
-    --border-light:#ECE7D8;
-    --shadow-sm:0 2px 8px rgba(11,31,58,0.06);
-    --shadow: 0 10px 30px rgba(11,31,58,0.08);
-    --shadow-lg: 0 16px 40px rgba(11,31,58,0.14);
-    --radius: 8px;
-    --radius-sm: 5px;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    font-family:'Inter',sans-serif;
-    background:var(--cream);
-    color:var(--ink);
-    -webkit-font-smoothing:antialiased;
-    line-height:1.5;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-  }
-  h1,h2,h3,h4{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    margin:0;
-    color:var(--navy);
-  }
-  a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;cursor:pointer;}
-  input,select,textarea{font-family:inherit;font-size:0.92rem;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Vendor — Devka Beach Resort</title>
+  <link rel="icon" type="image/png" href="LOGO.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    :root {
+      --navy: #0B1F3A;
+      --navy-deep: #071527;
+      --navy-soft: #122A4D;
+      --gold: #C6A15B;
+      --gold-soft: #E4D3A6;
+      --gold-dim: #9c814a;
+      --gold-light: #F7F2E7;
+      --cream: #F8F5EE;
+      --white: #FFFFFF;
+      --ink: #17222E;
+      --muted: #5B6B7C;
+      --success: #2F6F4E;
+      --success-bg: #EAF3EC;
+      --error: #A63A2C;
+      --error-bg: #FBEAE6;
+      --border: #E2DAC5;
+      --border-light: #ECE7D8;
+      --shadow-sm: 0 2px 8px rgba(11, 31, 58, 0.06);
+      --shadow: 0 10px 30px rgba(11, 31, 58, 0.08);
+      --shadow-lg: 0 16px 40px rgba(11, 31, 58, 0.14);
+      --radius: 8px;
+      --radius-sm: 5px;
+    }
 
-  /* Top Navigation */
-  .admin-topbar{
-    background:var(--navy-deep);
-    color:var(--cream);
-    padding:14px 28px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:sticky;top:0;z-index:100;
-    border-bottom:1px solid rgba(198,161,91,0.35);
-    box-shadow:0 4px 18px rgba(7,21,39,0.2);
-  }
-  .brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
-  .brand-logo{
-    width:42px;height:42px;border-radius:50%;
-    background:var(--white);
-    padding:3px;
-    object-fit:contain;
-    box-shadow:0 2px 8px rgba(0,0,0,0.2), 0 0 0 1.5px var(--gold);
-    flex-shrink:0;
-  }
-  .brand-titles strong{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--white);display:block;line-height:1.1;}
-  .brand-titles span{font-size:0.7rem;letter-spacing:0.08em;color:var(--gold-soft);font-weight:600;}
+    * {
+      box-sizing: border-box;
+    }
 
-  .topbar-actions{display:flex;align-items:center;gap:14px;}
-  .sync-indicator{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:0.75rem;color:rgba(248,245,238,0.7);
-    background:rgba(255,255,255,0.06);
-    padding:6px 12px;border-radius:20px;border:1px solid rgba(198,161,91,0.2);
-  }
-  .sync-dot{width:8px;height:8px;border-radius:50%;background:#4ADE80;box-shadow:0 0 8px #4ADE80;}
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-  .btn{
-    border:1px solid transparent;
-    padding:8px 16px;
-    border-radius:var(--radius-sm);
-    font-size:0.86rem;
-    font-weight:600;
-    transition:all .15s ease;
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  }
-  .btn-gold{background:var(--gold);color:var(--navy-deep);}
-  .btn-gold:hover{background:var(--gold-soft);transform:translateY(-1px);}
-  .btn-outline{background:transparent;border-color:var(--navy);color:var(--navy);}
-  .btn-outline:hover{background:var(--navy);color:var(--white);}
-  .btn-ghost{background:transparent;border-color:rgba(248,245,238,0.3);color:var(--cream);}
-  .btn-ghost:hover{border-color:var(--gold-soft);color:var(--gold-soft);}
-  .btn-danger{background:transparent;border-color:var(--error);color:var(--error);}
-  .btn-danger:hover{background:var(--error);color:var(--white);}
-  .btn-success{background:var(--success);color:var(--white);}
-  .btn-success:hover{background:#23573c;}
-  .btn-sm{padding:5px 12px;font-size:0.78rem;}
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-  /* Main Container */
-  main{flex:1;}
-  .shell{max-width:1300px;margin:0 auto;padding:28px 24px 70px;}
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      margin: 0;
+      color: var(--navy);
+    }
 
-  /* Login Card */
-  .login-wrap{
-    max-width:440px;margin:60px auto;
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:38px 32px;
-    box-shadow:var(--shadow-lg);
-  }
-  .login-badge{
-    width:80px;height:80px;border-radius:50%;background:var(--white);
-    padding:6px;margin:0 auto 16px;
-    box-shadow:0 4px 20px rgba(11,31,58,0.12), 0 0 0 2px var(--gold);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .login-badge img{width:100%;height:100%;object-fit:contain;}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-  .field label{font-size:0.82rem;font-weight:600;color:var(--navy);}
-  .field input,.field select,.field textarea{
-    padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);
-    background:var(--white);color:var(--ink);outline:none;transition:border-color .15s;
-  }
-  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold-dim);box-shadow:0 0 0 3px rgba(198,161,91,0.15);}
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
 
-  /* Stat cards */
-  .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:26px;}
-  @media(max-width:960px){.stat-grid{grid-template-columns:repeat(3,1fr);}}
-  @media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
-  .stat-card{
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:18px 20px;
-    box-shadow:var(--shadow-sm);
-    border-left:4px solid var(--border);
-    transition:transform .15s ease;
-  }
-  .stat-card:hover{transform:translateY(-2px);}
-  .stat-card.stat-all{border-left-color:var(--navy);}
-  .stat-card.stat-firm{border-left-color:var(--gold);}
-  .stat-card.stat-guest{border-left-color:#3B82F6;}
-  .stat-card.stat-pending{border-left-color:#F59E0B;}
-  .stat-card.stat-approved{border-left-color:var(--success);}
-  .stat-card .num{font-family:'Fraunces',serif;font-size:1.85rem;font-weight:600;color:var(--navy);line-height:1;}
-  .stat-card .label{font-size:0.78rem;color:var(--muted);margin-top:6px;font-weight:500;}
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
 
-  /* Toolbar */
-  .toolbar{
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px 20px;
-    box-shadow:var(--shadow-sm);
-    margin-bottom:24px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .toolbar-search{
-    display:flex;align-items:center;gap:10px;
-    flex:1;min-width:260px;
-  }
-  .toolbar-search input{
-    width:100%;padding:9px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);
-  }
-  .filter-pills{display:flex;gap:8px;flex-wrap:wrap;}
-  .pill-btn{
-    border:1px solid var(--border);background:var(--cream);
-    padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:600;
-    color:var(--muted);transition:all .15s;
-  }
-  .pill-btn:hover{border-color:var(--gold-dim);color:var(--navy);}
-  .pill-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+    /* Top Navigation */
+    .admin-topbar {
+      background: var(--navy-deep);
+      color: var(--cream);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(198, 161, 91, 0.35);
+      box-shadow: 0 4px 18px rgba(7, 21, 39, 0.2);
+    }
 
-  /* Breadcrumb Header for Folder Interior */
-  .folder-nav-header{
-    display:flex;align-items:center;justify-content:space-between;
-    background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
-    padding:16px 22px;margin-bottom:22px;box-shadow:var(--shadow-sm);
-  }
-  .breadcrumbs{display:flex;align-items:center;gap:10px;font-size:0.95rem;}
-  .breadcrumb-crumb{color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;}
-  .breadcrumb-crumb:hover{color:var(--navy);text-decoration:underline;}
-  .breadcrumb-sep{color:var(--border);}
-  .breadcrumb-current{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:var(--navy);display:flex;align-items:center;gap:8px;}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
 
-  /* Folder Grid (Explorer View) */
-  .folder-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(290px, 1fr));
-    gap:20px;
-  }
-  .folder-card{
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:22px 20px;
-    box-shadow:var(--shadow-sm);
-    cursor:pointer;
-    transition:all .2s ease;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .folder-card:hover{
-    transform:translateY(-3px);
-    box-shadow:var(--shadow);
-    border-color:var(--gold);
-  }
-  .folder-top{
-    display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
-  }
-  .folder-icon-wrap{
-    width:52px;height:52px;border-radius:12px;
-    background:linear-gradient(135deg, #F3E7CA 0%, #E8D5A3 100%);
-    border:1px solid var(--gold-soft);
-    display:flex;align-items:center;justify-content:center;
-    font-size:1.75rem;
-    box-shadow:inset 0 1px 2px rgba(255,255,255,0.7), 0 2px 6px rgba(198,161,91,0.25);
-    flex-shrink:0;
-  }
-  .folder-card.is-guest .folder-icon-wrap{
-    background:linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
-    border-color:#93C5FD;
-    box-shadow:inset 0 1px 2px rgba(255,255,255,0.7), 0 2px 6px rgba(59,130,246,0.2);
-  }
-  .folder-meta-badge{
-    font-size:0.72rem;font-weight:600;padding:3px 8px;border-radius:12px;
-  }
-  .type-firm{background:#F7F2E7;color:var(--gold-dim);border:1px solid var(--gold-soft);}
-  .type-guest{background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE;}
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--white);
+      padding: 3px;
+      object-fit: contain;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 1.5px var(--gold);
+      flex-shrink: 0;
+    }
 
-  .folder-title{
-    font-family:'Fraunces',serif;
-    font-size:1.15rem;font-weight:600;color:var(--navy);
-    line-height:1.25;
-    word-break:break-word;
-  }
-  .folder-sub{
-    font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:6px;
-  }
-  .folder-files-count{
-    background:var(--cream);border:1px solid var(--border-light);
-    border-radius:var(--radius-sm);padding:8px 12px;
-    display:flex;align-items:center;justify-content:space-between;
-    font-size:0.78rem;color:var(--muted);
-  }
+    .brand-titles strong {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      display: block;
+      line-height: 1.1;
+    }
 
-  .status-pill{
-    display:inline-flex;align-items:center;gap:5px;
-    padding:4px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;white-space:nowrap;
-  }
-  .status-Submitted{background:#EEF1F5;color:#39536b;}
-  .status-GSTVerified{background:#EAE6F5;color:#5a3e9e;}
-  .status-UnderReview{background:#F3EEE0;color:var(--gold-dim);}
-  .status-Approved{background:var(--success-bg);color:var(--success);}
-  .status-Rejected{background:var(--error-bg);color:var(--error);}
+    .brand-titles span {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--gold-soft);
+      font-weight: 600;
+    }
 
-  /* Inside Folder Details View */
-  .folder-detail-container{
-    display:grid;grid-template-columns:360px 1fr;gap:24px;
-  }
-  @media(max-width:1020px){.folder-detail-container{grid-template-columns:1fr;}}
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-  .sidebar-box{
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:22px;
-    box-shadow:var(--shadow-sm);
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-  }
-  .folder-hero-badge{
-    display:flex;align-items:center;gap:14px;
-    padding-bottom:16px;border-bottom:1px solid var(--border-light);
-  }
-  .folder-hero-icon{
-    width:56px;height:56px;border-radius:12px;
-    background:linear-gradient(135deg, #F3E7CA 0%, #E8D5A3 100%);
-    display:flex;align-items:center;justify-content:center;
-    font-size:2rem;flex-shrink:0;
-  }
+    .sync-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: rgba(248, 245, 238, 0.7);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(198, 161, 91, 0.2);
+    }
 
-  .content-box{
-    background:var(--white);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:24px;
-    box-shadow:var(--shadow-sm);
-  }
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 8px #4ADE80;
+    }
 
-  .folder-tabs{
-    display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:22px;
-  }
-  .folder-tab{
-    padding:10px 18px;border:none;background:transparent;
-    font-weight:600;font-size:0.88rem;color:var(--muted);
-    border-bottom:2px solid transparent;cursor:pointer;
-    display:flex;align-items:center;gap:8px;
-  }
-  .folder-tab.active{
-    color:var(--navy);border-bottom-color:var(--gold);background:rgba(198,161,91,0.06);
-    border-radius:var(--radius-sm) var(--radius-sm) 0 0;
-  }
+    .btn {
+      border: 1px solid transparent;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      font-weight: 600;
+      transition: all .15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
-  /* File items inside folder */
-  .files-grid{
-    display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:16px;
-  }
-  .file-item{
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:16px 14px;
-    background:#FAFAF7;
-    transition:all .15s ease;
-    display:flex;flex-direction:column;gap:10px;
-    position:relative;
-  }
-  .file-item:hover{
-    border-color:var(--gold);background:var(--white);box-shadow:var(--shadow-sm);
-  }
-  .file-icon-row{display:flex;align-items:center;justify-content:space-between;}
-  .file-glyph{font-size:2rem;line-height:1;}
-  .file-info-name{font-size:0.84rem;font-weight:600;color:var(--navy);word-break:break-word;line-height:1.2;}
-  .file-info-meta{font-size:0.72rem;color:var(--muted);}
-  .file-actions{display:flex;gap:6px;margin-top:auto;}
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy-deep);
+    }
 
-  /* Dossier layout */
-  .dossier-section{margin-bottom:26px;}
-  .dossier-title{
-    font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--navy);
-    border-bottom:1px solid var(--border-light);padding-bottom:8px;margin-bottom:14px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .dossier-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;font-size:0.86rem;
-  }
-  @media(max-width:640px){.dossier-grid{grid-template-columns:1fr;}}
-  .dossier-item span{display:block;color:var(--muted);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;}
-  .dossier-item strong{color:var(--ink);font-weight:600;font-size:0.9rem;}
+    .btn-gold:hover {
+      background: var(--gold-soft);
+      transform: translateY(-1px);
+    }
 
-  /* Modal preview */
-  .modal-overlay{
-    position:fixed;inset:0;background:rgba(7,21,39,0.75);
-    display:flex;align-items:center;justify-content:center;padding:24px;z-index:200;
-  }
-  .preview-modal{
-    background:var(--white);border-radius:var(--radius);max-width:850px;width:100%;max-height:90vh;
-    display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--shadow-lg);
-  }
-  .preview-head{
-    display:flex;justify-content:space-between;align-items:center;padding:16px 22px;
-    border-bottom:1px solid var(--border);background:var(--cream);
-  }
-  .preview-body{
-    padding:20px;overflow-y:auto;display:flex;align-items:center;justify-content:center;flex:1;background:#1E293B;
-  }
-  .preview-body img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:4px;}
-  .preview-body iframe{width:100%;height:70vh;border:none;background:white;}
+    .btn-outline {
+      background: transparent;
+      border-color: var(--navy);
+      color: var(--navy);
+    }
 
-  /* Toast */
-  .toast-wrap{position:fixed;top:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap:10px;max-width:360px;}
-  .toast{
-    background:var(--navy);color:var(--cream);padding:14px 18px;border-radius:var(--radius-sm);
-    box-shadow:var(--shadow);font-size:0.86rem;border-left:4px solid var(--gold);
-    animation:slidein .2s ease;
-  }
-  .toast.success{border-left-color:var(--success);}
-  .toast.error{border-left-color:var(--error);}
-  @keyframes slidein{from{transform:translateX(30px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+    .btn-outline:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
 
-  .empty-folder-state{
-    text-align:center;padding:60px 20px;color:var(--muted);
-    border:2px dashed var(--border);border-radius:var(--radius);background:#FCFBF8;
-  }
-  .empty-icon{font-size:3rem;margin-bottom:12px;opacity:0.7;}
-</style>
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(248, 245, 238, 0.3);
+      color: var(--cream);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold-soft);
+      color: var(--gold-soft);
+    }
+
+    .btn-danger {
+      background: transparent;
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .btn-danger:hover {
+      background: var(--error);
+      color: var(--white);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: var(--white);
+    }
+
+    .btn-success:hover {
+      background: #23573c;
+    }
+
+    .btn-sm {
+      padding: 5px 12px;
+      font-size: 0.78rem;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+    }
+
+    .shell {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 28px 24px 70px;
+    }
+
+    /* Login Card */
+    .login-wrap {
+      max-width: 440px;
+      margin: 60px auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 38px 32px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .login-badge {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--white);
+      padding: 6px;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 20px rgba(11, 31, 58, 0.12), 0 0 0 2px var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--gold-dim);
+      box-shadow: 0 0 0 3px rgba(198, 161, 91, 0.15);
+    }
+
+    /* Stat cards */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    @media(max-width:960px) {
+      .stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media(max-width:640px) {
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--border);
+      transition: transform .15s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .stat-card.stat-all {
+      border-left-color: var(--navy);
+    }
+
+    .stat-card.stat-firm {
+      border-left-color: var(--gold);
+    }
+
+    .stat-card.stat-guest {
+      border-left-color: #3B82F6;
+    }
+
+    .stat-card.stat-pending {
+      border-left-color: #F59E0B;
+    }
+
+    .stat-card.stat-approved {
+      border-left-color: var(--success);
+    }
+
+    .stat-card .num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat-card .label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar-search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .toolbar-search input {
+      width: 100%;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      transition: all .15s;
+    }
+
+    .pill-btn:hover {
+      border-color: var(--gold-dim);
+      color: var(--navy);
+    }
+
+    .pill-btn.active {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    /* Breadcrumb Header for Folder Interior */
+    .folder-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 22px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .breadcrumb-crumb {
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb-crumb:hover {
+      color: var(--navy);
+      text-decoration: underline;
+    }
+
+    .breadcrumb-sep {
+      color: var(--border);
+    }
+
+    .breadcrumb-current {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Folder Grid (Explorer View) */
+    .folder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .folder-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all .2s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .folder-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--gold);
+    }
+
+    .folder-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .folder-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #F3E7CA 0%, #E8D5A3 100%);
+      border: 1px solid var(--gold-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(198, 161, 91, 0.25);
+      flex-shrink: 0;
+    }
+
+    .folder-card.is-guest .folder-icon-wrap {
+      background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+      border-color: #93C5FD;
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(59, 130, 246, 0.2);
+    }
+
+    .folder-meta-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .type-firm {
+      background: #F7F2E7;
+      color: var(--gold-dim);
+      border: 1px solid var(--gold-soft);
+    }
+
+    .type-guest {
+      background: #EFF6FF;
+      color: #2563EB;
+      border: 1px solid #BFDBFE;
+    }
+
+    .folder-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .folder-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .folder-files-count {
+      background: var(--cream);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .status-Submitted {
+      background: #EEF1F5;
+      color: #39536b;
+    }
+
+    .status-GSTVerified {
+      background: #EAE6F5;
+      color: #5a3e9e;
+    }
+
+    .status-UnderReview {
+      background: #F3EEE0;
+      color: var(--gold-dim);
+    }
+
+    .status-Approved {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-Rejected {
+      background: var(--error-bg);
+      color: var(--error);
+    }
+
+    /* Inside Folder Details View */
+    .folder-detail-container {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+    }
+
+    @media(max-width:1020px) {
+      .folder-detail-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sidebar-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .folder-hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .folder-hero-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #F3E7CA 0%, #E8D5A3 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .content-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .folder-tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .folder-tab {
+      padding: 10px 18px;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .folder-tab.active {
+      color: var(--navy);
+      border-bottom-color: var(--gold);
+      background: rgba(198, 161, 91, 0.06);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    /* File items inside folder */
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .file-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 14px;
+      background: #FAFAF7;
+      transition: all .15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .file-item:hover {
+      border-color: var(--gold);
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .file-icon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .file-glyph {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .file-info-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--navy);
+      word-break: break-word;
+      line-height: 1.2;
+    }
+
+    .file-info-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    /* Dossier layout */
+    .dossier-section {
+      margin-bottom: 26px;
+    }
+
+    .dossier-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 20px;
+      font-size: 0.86rem;
+    }
+
+    @media(max-width:640px) {
+      .dossier-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dossier-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .dossier-item strong {
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* Modal preview */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 21, 39, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 200;
+    }
+
+    .preview-modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      max-width: 850px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .preview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      background: var(--cream);
+    }
+
+    .preview-body {
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      background: #1E293B;
+    }
+
+    .preview-body img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .preview-body iframe {
+      width: 100%;
+      height: 70vh;
+      border: none;
+      background: white;
+    }
+
+    /* Toast */
+    .toast-wrap {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 360px;
+    }
+
+    .toast {
+      background: var(--navy);
+      color: var(--cream);
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      font-size: 0.86rem;
+      border-left: 4px solid var(--gold);
+      animation: slidein .2s ease;
+    }
+
+    .toast.success {
+      border-left-color: var(--success);
+    }
+
+    .toast.error {
+      border-left-color: var(--error);
+    }
+
+    @keyframes slidein {
+      from {
+        transform: translateX(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .empty-folder-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      background: #FCFBF8;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+  </style>
 </head>
+
 <body>
-<div id="admin-app"></div>
+  <div id="admin-app"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="devka-config.js?v=2.1"></script>
-<script src="vendor-db.js?v=2.1"></script>
-<script>
-/* =========================================================================
-   DEVKA BEACH RESORT — ADMIN VENDOR APPLICATION
-   Dedicated administrative portal featuring Folder-Style Document & Dossier Explorer
-   ========================================================================= */
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="devka-config.js?v=2.1"></script>
+  <script src="vendor-db.js?v=2.1"></script>
+  <script>
+    /* =========================================================================
+       DEVKA BEACH RESORT — ADMIN VENDOR APPLICATION
+       Dedicated administrative portal featuring Folder-Style Document & Dossier Explorer
+       ========================================================================= */
 
-/* ---- CONFIGURATION: Public vendor portal URL ---- */
-const PUBLIC_PORTAL_URL = "https://connectwith.devkabeachresort.com/";
-/* --------------------------------------------------------------------------------- */
+    /* ---- CONFIGURATION: Public vendor portal URL ---- */
+    const PUBLIC_PORTAL_URL = "https://connectwith.devkabeachresort.com/";
+    /* --------------------------------------------------------------------------------- */
 
-let session = JSON.parse(sessionStorage.getItem("devka_admin_session") || "null");
-let vendors = [];
-let currentFolderId = null; // when set, shows interior of that vendor's folder
-let currentTab = "docs";    // 'docs' | 'dossier' | 'notes'
-let previewDoc = null;      // {title, url, type}
+    let session = JSON.parse(sessionStorage.getItem("devka_admin_session") || "null");
+    let vendors = [];
+    let currentFolderId = null; // when set, shows interior of that vendor's folder
+    let currentTab = "docs";    // 'docs' | 'dossier' | 'notes'
+    let previewDoc = null;      // {title, url, type}
 
-let filters = {
-  search: "",
-  type: "all",    // 'all' | 'firm' | 'guest'
-  status: "all"   // 'all' | 'Pending' | 'Approved' | 'Rejected'
-};
+    let filters = {
+      search: "",
+      type: "all",    // 'all' | 'firm' | 'guest'
+      status: "all"   // 'all' | 'Pending' | 'Approved' | 'Rejected'
+    };
 
-let toasts = [];
-function showToast(msg, type = "neutral"){
-  const id = Date.now() + Math.random();
-  toasts.push({id, msg, type});
-  render();
-  setTimeout(() => { toasts = toasts.filter(t => t.id !== id); render(); }, 3800);
-}
+    let toasts = [];
+    function showToast(msg, type = "neutral") {
+      const id = Date.now() + Math.random();
+      toasts.push({ id, msg, type });
+      render();
+      setTimeout(() => { toasts = toasts.filter(t => t.id !== id); render(); }, 3800);
+    }
 
-const SUPABASE_ADMIN_SECRET = "sb_secret_X3kM6kfbTq7srYOMGms2Cg_Fbisk3eK";
-const SUPABASE_REST_URL = "https://ikxrmrurtgwycagkrlxd.supabase.co/rest/v1";
+    // Initial loader & cross-tab sync via VendorDB
+    async function refreshVendors() {
+      if (window.VendorDB && typeof window.VendorDB.getAllVendors === "function") {
+        try {
+          vendors = await window.VendorDB.getAllVendors();
+          render();
+        } catch (err) {
+          console.warn("Could not fetch vendors:", err);
+        }
+      }
+    }
 
-// Initial loader & cross-tab sync (direct Supabase query with admin credentials)
-async function refreshVendors(){
-  try {
-    const res = await fetch(`${SUPABASE_REST_URL}/vendors?order=submitted_at.desc`, {
-      method: "GET",
-      headers: {
-        "apikey": SUPABASE_ADMIN_SECRET,
-        "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`
+    window.addEventListener("storage", (e) => {
+      if (e.key === "devka_vendors_last_sync" || e.key === "devka_vendors_registry") {
+        refreshVendors();
       }
     });
-    if (res.ok) {
-      const rows = await res.json();
-      vendors = rows.map((r) => ({
-        id:           r.id,
-        type:         r.type,
-        status:       r.status,
-        submittedAt:  Number(r.submitted_at),
-        updatedAt:    Number(r.updated_at),
-        company:      r.company || {},
-        contact:      r.contact || {},
-        guest:        r.guest || {},
-        bank:         r.bank || {},
-        billing:      r.billing || {},
-        payment:      r.payment || {},
-        documents:    r.documents || {},
-        adminNotes:   r.admin_notes || ""
-      }));
-      render();
-      return;
-    }
-  } catch (err) {
-    console.warn("Direct Supabase query notice:", err);
-  }
+    window.addEventListener("devka_vendor_updated", () => {
+      refreshVendors();
+    });
 
-  if (window.VendorDB) {
-    vendors = await window.VendorDB.getAllVendors();
-    render();
-  }
-}
+    // Vendor data is loaded strictly from real registrations via window.VendorDB
 
-window.addEventListener("storage", (e) => {
-  if(e.key === "devka_vendors_last_sync" || e.key === "devka_vendors_registry"){
-    refreshVendors();
-  }
-});
-window.addEventListener("devka_vendor_updated", () => {
-  refreshVendors();
-});
+    // App Root Render
+    function render() {
+      const app = document.getElementById("admin-app");
+      if (!session) {
+        app.innerHTML = renderLogin();
+        attachLoginEvents();
+        return;
+      }
 
-// Vendor data is loaded strictly from real registrations via window.VendorDB
-
-// App Root Render
-function render(){
-  const app = document.getElementById("admin-app");
-  if(!session){
-    app.innerHTML = renderLogin();
-    attachLoginEvents();
-    return;
-  }
-
-  app.innerHTML = `
+      app.innerHTML = `
     ${renderTopbar()}
     <main class="shell">
       ${currentFolderId ? renderFolderInterior() : renderExplorer()}
@@ -506,11 +990,11 @@ function render(){
     ${renderPreviewModal()}
     ${renderToasts()}
   `;
-  attachExplorerEvents();
-}
+      attachExplorerEvents();
+    }
 
-function renderTopbar(){
-  return `
+    function renderTopbar() {
+      return `
   <header class="admin-topbar">
     <div class="brand" data-action="go-root">
       <img src="LOGO.png" alt="Devka Beach Resort" class="brand-logo" />
@@ -531,10 +1015,10 @@ function renderTopbar(){
       <button class="btn btn-outline btn-sm" style="color:var(--cream);border-color:rgba(255,255,255,0.3);" data-action="logout">Log out</button>
     </div>
   </header>`;
-}
+    }
 
-function renderLogin(){
-  return `
+    function renderLogin() {
+      return `
   <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%);padding:20px;">
     <div class="login-wrap">
       <div class="login-badge">
@@ -559,41 +1043,41 @@ function renderLogin(){
       
     </div>
   </div>`;
-}
-
-// ---------------- EXPLORER (FOLDER DIRECTORY VIEW) ---------------- //
-function renderExplorer(){
-  // Filter and search logic
-  const filtered = vendors.filter(v => {
-    // Type filter
-    if(filters.type !== "all"){
-      if(filters.type === "firm" && v.type === "guest") return false;
-      if(filters.type === "guest" && v.type !== "guest") return false;
     }
-    // Status filter
-    if(filters.status !== "all" && v.status !== filters.status) return false;
-    // Search
-    if(filters.search.trim()){
-      const q = filters.search.toLowerCase().trim();
-      const firmName = (v.company && (v.company.companyName + " " + v.company.legalName)) || "";
-      const guestName = (v.guest && v.guest.fullName) || "";
-      const id = v.id || "";
-      const gst = (v.company && v.company.gst) || "";
-      const pan = (v.company && v.company.pan) || "";
-      const mobile = (v.contact && v.contact.mobile) || (v.guest && v.guest.mobile) || "";
-      const hay = [firmName, guestName, id, gst, pan, mobile].join(" ").toLowerCase();
-      if(!hay.includes(q)) return false;
-    }
-    return true;
-  });
 
-  const totalCount = vendors.length;
-  const firmCount = vendors.filter(v => v.type !== "guest").length;
-  const guestCount = vendors.filter(v => v.type === "guest").length;
-  const pendingCount = vendors.filter(v => ["Submitted","Under Review"].includes(v.status)).length;
-  const approvedCount = vendors.filter(v => v.status === "Approved").length;
+    // ---------------- EXPLORER (FOLDER DIRECTORY VIEW) ---------------- //
+    function renderExplorer() {
+      // Filter and search logic
+      const filtered = vendors.filter(v => {
+        // Type filter
+        if (filters.type !== "all") {
+          if (filters.type === "firm" && v.type === "guest") return false;
+          if (filters.type === "guest" && v.type !== "guest") return false;
+        }
+        // Status filter
+        if (filters.status !== "all" && v.status !== filters.status) return false;
+        // Search
+        if (filters.search.trim()) {
+          const q = filters.search.toLowerCase().trim();
+          const firmName = (v.company && (v.company.companyName + " " + v.company.legalName)) || "";
+          const guestName = (v.guest && v.guest.fullName) || "";
+          const id = v.id || "";
+          const gst = (v.company && v.company.gst) || "";
+          const pan = (v.company && v.company.pan) || "";
+          const mobile = (v.contact && v.contact.mobile) || (v.guest && v.guest.mobile) || "";
+          const hay = [firmName, guestName, id, gst, pan, mobile].join(" ").toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
 
-  return `
+      const totalCount = vendors.length;
+      const firmCount = vendors.filter(v => v.type !== "guest").length;
+      const guestCount = vendors.filter(v => v.type === "guest").length;
+      const pendingCount = vendors.filter(v => ["Submitted", "Under Review"].includes(v.status)).length;
+      const approvedCount = vendors.filter(v => v.status === "Approved").length;
+
+      return `
     <div style="margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;">
       <div>
         <h2 style="font-size:1.65rem;">Vendor Folders Directory</h2>
@@ -639,15 +1123,15 @@ function renderExplorer(){
         <input type="text" id="explorer-search" placeholder="Search folder by company, guest name, GST, PAN, phone..." value="${escapeHtml(filters.search)}">
       </div>
       <div class="filter-pills">
-        <button class="pill-btn ${filters.type==='all'?'active':''}" data-filter-type="all">All Folders (${totalCount})</button>
-        <button class="pill-btn ${filters.type==='firm'?'active':''}" data-filter-type="firm">🏢 Firm Folders (${firmCount})</button>
-        <button class="pill-btn ${filters.type==='guest'?'active':''}" data-filter-type="guest">👤 Guest Folders (${guestCount})</button>
+        <button class="pill-btn ${filters.type === 'all' ? 'active' : ''}" data-filter-type="all">All Folders (${totalCount})</button>
+        <button class="pill-btn ${filters.type === 'firm' ? 'active' : ''}" data-filter-type="firm">🏢 Firm Folders (${firmCount})</button>
+        <button class="pill-btn ${filters.type === 'guest' ? 'active' : ''}" data-filter-type="guest">👤 Guest Folders (${guestCount})</button>
       </div>
       <div class="filter-pills">
-        <button class="pill-btn ${filters.status==='all'?'active':''}" data-filter-status="all">All Status</button>
-        <button class="pill-btn ${filters.status==='Submitted'?'active':''}" data-filter-status="Submitted">Submitted</button>
-        <button class="pill-btn ${filters.status==='Under Review'?'active':''}" data-filter-status="Under Review">Under Review</button>
-        <button class="pill-btn ${filters.status==='Approved'?'active':''}" data-filter-status="Approved">Approved</button>
+        <button class="pill-btn ${filters.status === 'all' ? 'active' : ''}" data-filter-status="all">All Status</button>
+        <button class="pill-btn ${filters.status === 'Submitted' ? 'active' : ''}" data-filter-status="Submitted">Submitted</button>
+        <button class="pill-btn ${filters.status === 'Under Review' ? 'active' : ''}" data-filter-status="Under Review">Under Review</button>
+        <button class="pill-btn ${filters.status === 'Approved' ? 'active' : ''}" data-filter-status="Approved">Approved</button>
       </div>
     </div>
 
@@ -665,16 +1149,16 @@ function renderExplorer(){
       </div>
     `}
   `;
-}
+    }
 
-function renderFolderCard(v){
-  const isGuest = v.type === "guest";
-  const name = isGuest ? (v.guest?.fullName || "Guest Vendor") : (v.company?.companyName || "Unnamed Firm");
-  const sub = isGuest ? `Guest: ${v.guest?.serviceType || "Solo Contractor"}` : (v.company?.legalName || v.company?.gst || "Corporate Supplier");
-  const docCount = Object.keys(v.documents || {}).length;
-  const dateStr = new Date(v.submittedAt || Date.now()).toLocaleDateString("en-IN", {day:'2-digit', month:'short', year:'numeric'});
+    function renderFolderCard(v) {
+      const isGuest = v.type === "guest";
+      const name = isGuest ? (v.guest?.fullName || "Guest Vendor") : (v.company?.companyName || "Unnamed Firm");
+      const sub = isGuest ? `Guest: ${v.guest?.serviceType || "Solo Contractor"}` : (v.company?.legalName || v.company?.gst || "Corporate Supplier");
+      const docCount = Object.keys(v.documents || {}).length;
+      const dateStr = new Date(v.submittedAt || Date.now()).toLocaleDateString("en-IN", { day: '2-digit', month: 'short', year: 'numeric' });
 
-  return `
+      return `
     <div class="folder-card ${isGuest ? 'is-guest' : ''}" data-open-folder="${v.id}">
       <div class="folder-top">
         <div class="folder-icon-wrap">
@@ -694,8 +1178,8 @@ function renderFolderCard(v){
         </div>
       </div>
       <div class="folder-files-count">
-        <span>📄 ${docCount} document${docCount===1?'':'s'}</span>
-        <span class="status-pill status-${(v.status||'Submitted').replace(/\s+/g,'')}">${v.status || 'Submitted'}</span>
+        <span>📄 ${docCount} document${docCount === 1 ? '' : 's'}</span>
+        <span class="status-pill status-${(v.status || 'Submitted').replace(/\s+/g, '')}">${v.status || 'Submitted'}</span>
       </div>
       <div style="font-size:0.72rem;color:var(--muted);display:flex;justify-content:space-between;border-top:1px solid var(--border-light);padding-top:8px;">
         <span>Submitted ${dateStr}</span>
@@ -703,21 +1187,21 @@ function renderFolderCard(v){
       </div>
     </div>
   `;
-}
+    }
 
-// ---------------- FOLDER INTERIOR (INSIDE SPECIFIC FOLDER) ---------------- //
-function renderFolderInterior(){
-  const v = vendors.find(x => x.id === currentFolderId);
-  if(!v){
-    currentFolderId = null;
-    return renderExplorer();
-  }
+    // ---------------- FOLDER INTERIOR (INSIDE SPECIFIC FOLDER) ---------------- //
+    function renderFolderInterior() {
+      const v = vendors.find(x => x.id === currentFolderId);
+      if (!v) {
+        currentFolderId = null;
+        return renderExplorer();
+      }
 
-  const isGuest = v.type === "guest";
-  const folderName = isGuest ? (v.guest?.fullName || "Guest Vendor") : (v.company?.companyName || "Firm Vendor");
-  const docsList = Object.entries(v.documents || {});
+      const isGuest = v.type === "guest";
+      const folderName = isGuest ? (v.guest?.fullName || "Guest Vendor") : (v.company?.companyName || "Firm Vendor");
+      const docsList = Object.entries(v.documents || {});
 
-  return `
+      return `
     <!-- Folder Breadcrumbs Navigation -->
     <div class="folder-nav-header">
       <div class="breadcrumbs">
@@ -742,12 +1226,12 @@ function renderFolderInterior(){
       <!-- Left Sidebar Box -->
       <div class="sidebar-box">
         <div class="folder-hero-badge">
-          <div class="folder-hero-icon ${isGuest?'is-guest':''}">📁</div>
+          <div class="folder-hero-icon ${isGuest ? 'is-guest' : ''}">📁</div>
           <div>
             <h3 style="font-size:1.2rem;line-height:1.2;">${escapeHtml(folderName)}</h3>
             <div style="font-size:0.78rem;color:var(--muted);margin-top:2px;">Folder ID: <strong>${v.id}</strong></div>
             <div style="margin-top:6px;">
-              <span class="status-pill status-${(v.status||'Submitted').replace(/\s+/g,'')}">${v.status || 'Submitted'}</span>
+              <span class="status-pill status-${(v.status || 'Submitted').replace(/\s+/g, '')}">${v.status || 'Submitted'}</span>
             </div>
           </div>
         </div>
@@ -783,11 +1267,11 @@ function renderFolderInterior(){
             ${!isGuest ? `
             <div style="display:flex;justify-content:space-between;">
               <span style="color:var(--muted);">GST Verified:</span>
-              <strong style="color:${v.gstVerified?'var(--success)':'var(--error)'};">${v.gstVerified?'Yes (Live API)':'No'}</strong>
+              <strong style="color:${v.gstVerified ? 'var(--success)' : 'var(--error)'};">${v.gstVerified ? 'Yes (Live API)' : 'No'}</strong>
             </div>
             <div style="display:flex;justify-content:space-between;">
               <span style="color:var(--muted);">PAN Verified:</span>
-              <strong style="color:${v.panVerified?'var(--success)':'var(--muted)'};">${v.panVerified?'Yes (Verified)':'Pending'}</strong>
+              <strong style="color:${v.panVerified ? 'var(--success)' : 'var(--muted)'};">${v.panVerified ? 'Yes (Verified)' : 'Pending'}</strong>
             </div>` : `
             <div style="display:flex;justify-content:space-between;">
               <span style="color:var(--muted);">Aadhaar Card:</span>
@@ -807,13 +1291,13 @@ function renderFolderInterior(){
       <div class="content-box">
         <!-- Sub-tabs for Folder interior -->
         <div class="folder-tabs">
-          <button class="folder-tab ${currentTab==='docs'?'active':''}" data-tab="docs">
+          <button class="folder-tab ${currentTab === 'docs' ? 'active' : ''}" data-tab="docs">
             📁 Documents &amp; Files (${docsList.length})
           </button>
-          <button class="folder-tab ${currentTab==='dossier'?'active':''}" data-tab="dossier">
+          <button class="folder-tab ${currentTab === 'dossier' ? 'active' : ''}" data-tab="dossier">
             📄 Registration Dossier
           </button>
-          <button class="folder-tab ${currentTab==='notes'?'active':''}" data-tab="notes">
+          <button class="folder-tab ${currentTab === 'notes' ? 'active' : ''}" data-tab="notes">
             📝 Admin Review Notes
           </button>
         </div>
@@ -824,21 +1308,21 @@ function renderFolderInterior(){
       </div>
     </div>
   `;
-}
+    }
 
-// Tab 1: Documents Folder
-function renderFolderDocumentsTab(v, docsList){
-  if(docsList.length === 0){
-    return `
+    // Tab 1: Documents Folder
+    function renderFolderDocumentsTab(v, docsList) {
+      if (docsList.length === 0) {
+        return `
       <div class="empty-folder-state">
         <div class="empty-icon">📄</div>
         <h4>No Documents in this Folder</h4>
         <p style="font-size:0.84rem;">No compliance files or attachments were uploaded with this submission.</p>
       </div>
     `;
-  }
+      }
 
-  return `
+      return `
     <div style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
       <div>
         <h4 style="font-size:1.05rem;">Attached Documents in Folder</h4>
@@ -849,33 +1333,33 @@ function renderFolderDocumentsTab(v, docsList){
       ${docsList.map(([key, doc]) => renderFileTile(v.id, key, doc)).join("")}
     </div>
   `;
-}
+    }
 
-function renderFileTile(vendorId, key, doc){
-  const ext = (doc.name || "").split(".").pop().toLowerCase();
-  const isPdf = ext === "pdf" || (doc.type || "").includes("pdf");
-  const isImg = ["jpg","jpeg","png","webp","gif"].includes(ext) || (doc.type || "").includes("image");
-  const glyph = isPdf ? "📕" : isImg ? "🖼️" : "📄";
-  const sizeFmt = fmtBytes(doc.size || 0);
+    function renderFileTile(vendorId, key, doc) {
+      const ext = (doc.name || "").split(".").pop().toLowerCase();
+      const isPdf = ext === "pdf" || (doc.type || "").includes("pdf");
+      const isImg = ["jpg", "jpeg", "png", "webp", "gif"].includes(ext) || (doc.type || "").includes("image");
+      const glyph = isPdf ? "📕" : isImg ? "🖼️" : "📄";
+      const sizeFmt = fmtBytes(doc.size || 0);
 
-  // Friendly label for key
-  const keyLabels = {
-    gst_certificate: "GST Certificate",
-    pan_card: "PAN Card",
-    cancelled_cheque: "Cancelled Cheque",
-    address_proof: "Address Proof",
-    bank_statement: "Bank Statement",
-    signatory_id: "Signatory ID",
-    incorporation_cert: "Incorporation Cert",
-    fssai_license: "FSSAI License",
-    msme_cert: "MSME Certificate",
-    shop_establishment: "Shop License",
-    aadhaar_doc: "Aadhaar Card",
-    guest_photo: "Guest Photo"
-  };
-  const label = keyLabels[key] || key;
+      // Friendly label for key
+      const keyLabels = {
+        gst_certificate: "GST Certificate",
+        pan_card: "PAN Card",
+        cancelled_cheque: "Cancelled Cheque",
+        address_proof: "Address Proof",
+        bank_statement: "Bank Statement",
+        signatory_id: "Signatory ID",
+        incorporation_cert: "Incorporation Cert",
+        fssai_license: "FSSAI License",
+        msme_cert: "MSME Certificate",
+        shop_establishment: "Shop License",
+        aadhaar_doc: "Aadhaar Card",
+        guest_photo: "Guest Photo"
+      };
+      const label = keyLabels[key] || key;
 
-  return `
+      return `
     <div class="file-item">
       <div class="file-icon-row">
         <span class="file-glyph">${glyph}</span>
@@ -898,14 +1382,14 @@ function renderFileTile(vendorId, key, doc){
       </div>
     </div>
   `;
-}
+    }
 
-// Tab 2: Vendor Registration Dossier
-function renderFolderDossierTab(v, isGuest){
-  if(isGuest){
-    const g = v.guest || {};
-    const b = v.bank || {};
-    return `
+    // Tab 2: Vendor Registration Dossier
+    function renderFolderDossierTab(v, isGuest) {
+      if (isGuest) {
+        const g = v.guest || {};
+        const b = v.bank || {};
+        return `
       <div class="dossier-section">
         <div class="dossier-title">👤 Guest Information</div>
         <div class="dossier-grid">
@@ -913,7 +1397,7 @@ function renderFolderDossierTab(v, isGuest){
           <div class="dossier-item"><span>Service / Purpose</span><strong>${escapeHtml(g.serviceType || 'Guest Vendor')}</strong></div>
           <div class="dossier-item"><span>Mobile Number</span><strong>${escapeHtml(g.mobile || '—')}</strong></div>
           <div class="dossier-item"><span>Email Address</span><strong>${escapeHtml(g.email || '—')}</strong></div>
-          <div class="dossier-item" style="grid-column:1/-1;"><span>Residential Address</span><strong>${escapeHtml(g.address || '—')}, ${escapeHtml(g.city||'')}, ${escapeHtml(g.state||'')} ${escapeHtml(g.pincode||'')}</strong></div>
+          <div class="dossier-item" style="grid-column:1/-1;"><span>Residential Address</span><strong>${escapeHtml(g.address || '—')}, ${escapeHtml(g.city || '')}, ${escapeHtml(g.state || '')} ${escapeHtml(g.pincode || '')}</strong></div>
         </div>
       </div>
 
@@ -937,25 +1421,25 @@ function renderFolderDossierTab(v, isGuest){
         </div>
       </div>` : ''}
     `;
-  }
+      }
 
-  // Firm / Company Dossier
-  const c = v.company || {};
-  const gst = v.gstData || {};
-  const pan = v.panData || {};
-  const ct = v.contact || {};
-  const b = v.bank || {};
-  const bl = v.billing || {};
-  const p = v.payment || {};
+      // Firm / Company Dossier
+      const c = v.company || {};
+      const gst = v.gstData || {};
+      const pan = v.panData || {};
+      const ct = v.contact || {};
+      const b = v.bank || {};
+      const bl = v.billing || {};
+      const p = v.payment || {};
 
-  return `
+      return `
     <div class="dossier-section">
       <div class="dossier-title">🏢 Company Registration Details</div>
       <div class="dossier-grid">
         <div class="dossier-item" style="grid-column:1/-1;"><span>Legal Company Registered Name</span><strong>${escapeHtml(c.legalName || c.companyName || '—')}</strong></div>
         <div class="dossier-item"><span>GST Number (GSTIN)</span><strong style="color:var(--navy);font-family:monospace;">${escapeHtml(c.gst || '—')}</strong></div>
         <div class="dossier-item"><span>PAN Card Number</span><strong style="color:var(--navy);font-family:monospace;">${escapeHtml(c.pan || '—')}</strong></div>
-        <div class="dossier-item" style="grid-column:1/-1;"><span>Company Registered Address</span><strong>${escapeHtml(c.address || '—')}, ${escapeHtml(c.city||'')}, ${escapeHtml(c.state||'')} - ${escapeHtml(c.pincode||'')}</strong></div>
+        <div class="dossier-item" style="grid-column:1/-1;"><span>Company Registered Address</span><strong>${escapeHtml(c.address || '—')}, ${escapeHtml(c.city || '')}, ${escapeHtml(c.state || '')} - ${escapeHtml(c.pincode || '')}</strong></div>
       </div>
     </div>
 
@@ -967,8 +1451,8 @@ function renderFolderDossierTab(v, isGuest){
         <div class="dossier-item"><span>Mobile Number</span><strong>${escapeHtml(ct.mobile || '—')}</strong></div>
         <div class="dossier-item"><span>Email Address</span><strong>${escapeHtml(ct.email || '—')}</strong></div>
         ${ct.accPersonName ? `
-        <div class="dossier-item"><span>Accounts Contact</span><strong>${escapeHtml(ct.accPersonName)} (${escapeHtml(ct.accMobile||'')})</strong></div>
-        <div class="dossier-item"><span>Accounts Email</span><strong>${escapeHtml(ct.accEmail||'—')}</strong></div>` : ''}
+        <div class="dossier-item"><span>Accounts Contact</span><strong>${escapeHtml(ct.accPersonName)} (${escapeHtml(ct.accMobile || '')})</strong></div>
+        <div class="dossier-item"><span>Accounts Email</span><strong>${escapeHtml(ct.accEmail || '—')}</strong></div>` : ''}
       </div>
     </div>
 
@@ -985,10 +1469,10 @@ function renderFolderDossierTab(v, isGuest){
     <div class="dossier-section">
       <div class="dossier-title">📦 Billing Preferences, Category &amp; Payment Terms</div>
       <div class="dossier-grid">
-        <div class="dossier-item"><span>Require GST on Invoices?</span><strong>${bl.gstOnInvoice==='yes'?'Yes':'No'}</strong></div>
-        <div class="dossier-item"><span>Require separate GST invoice for the liquor?</span><strong>${bl.liquorGstRequired==='yes'?'Yes':'No'}</strong></div>
-        <div class="dossier-item"><span>Want GST invoice for bill on the liquor?</span><strong>${bl.liquorBillGst==='yes'?'Yes':'No'}</strong></div>
-        <div class="dossier-item"><span>Vendor Category / Scope</span><strong>${escapeHtml(v.categoryText || (v.categories||[]).join(", ") || 'General Supplier')}</strong></div>
+        <div class="dossier-item"><span>Require GST on Invoices?</span><strong>${bl.gstOnInvoice === 'yes' ? 'Yes' : 'No'}</strong></div>
+        <div class="dossier-item"><span>Require separate GST invoice for the liquor?</span><strong>${bl.liquorGstRequired === 'yes' ? 'Yes' : 'No'}</strong></div>
+        <div class="dossier-item"><span>Want GST invoice for bill on the liquor?</span><strong>${bl.liquorBillGst === 'yes' ? 'Yes' : 'No'}</strong></div>
+        <div class="dossier-item"><span>Vendor Category / Scope</span><strong>${escapeHtml(v.categoryText || (v.categories || []).join(", ") || 'General Supplier')}</strong></div>
         <div class="dossier-item" style="grid-column:1/-1;"><span>Payment Method &amp; Credit Period</span><strong>${escapeHtml(p.method || 'RTGS')} · ${escapeHtml(p.creditPeriod || '30 Days')}</strong></div>
       </div>
     </div>
@@ -997,11 +1481,11 @@ function renderFolderDossierTab(v, isGuest){
       <button class="btn btn-gold" data-action="download-vendor-pdf">📥 Download Registration Form (PDF)</button>
     </div>
   `;
-}
+    }
 
-// Tab 3: Admin Notes Tab
-function renderFolderNotesTab(v){
-  return `
+    // Tab 3: Admin Notes Tab
+    function renderFolderNotesTab(v) {
+      return `
     <div>
       <h4 style="font-size:1.05rem;margin-bottom:6px;">Internal Compliance Remarks &amp; Audit Notes</h4>
       <div style="font-size:0.8rem;color:var(--muted);margin-bottom:14px;">
@@ -1013,14 +1497,14 @@ function renderFolderNotesTab(v){
       <button class="btn btn-gold btn-sm" data-action="save-notes">Save Notes to Folder</button>
     </div>
   `;
-}
+    }
 
-// ---------------- FILE PREVIEW MODAL ---------------- //
-function renderPreviewModal(){
-  if(!previewDoc) return "";
-  const isImg = (previewDoc.type || "").includes("image") || ["jpg","jpeg","png","webp"].some(ext => (previewDoc.name || "").toLowerCase().endsWith(ext));
-  const fileSource = previewDoc.url || previewDoc.data;
-  return `
+    // ---------------- FILE PREVIEW MODAL ---------------- //
+    function renderPreviewModal() {
+      if (!previewDoc) return "";
+      const isImg = (previewDoc.type || "").includes("image") || ["jpg", "jpeg", "png", "webp"].some(ext => (previewDoc.name || "").toLowerCase().endsWith(ext));
+      const fileSource = previewDoc.url || previewDoc.data;
+      return `
   <div class="modal-overlay" data-action="close-preview">
     <div class="preview-modal" onclick="event.stopPropagation()">
       <div class="preview-head">
@@ -1051,311 +1535,286 @@ function renderPreviewModal(){
       </div>
     </div>
   </div>`;
-}
-
-function renderToasts(){
-  if(!toasts.length) return "";
-  return `<div class="toast-wrap">${toasts.map(t => `<div class="toast ${t.type}">${escapeHtml(t.msg)}</div>`).join("")}</div>`;
-}
-
-// ---------------- EVENT ATTACHMENTS ---------------- //
-function attachLoginEvents(){
-  const form = document.getElementById("admin-login-form");
-  if(!form) return;
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const u = document.getElementById("admin-user").value.trim();
-    const p = document.getElementById("admin-pass").value;
-    const err = document.getElementById("login-error");
-    const btn = document.getElementById("admin-submit-btn");
-
-    if(!u || !p){
-      if(err){
-        err.textContent = "Please provide both User ID / Email and Password.";
-        err.style.display = "block";
-      }
-      return;
     }
 
-    if(btn){
-      btn.disabled = true;
-      btn.innerHTML = '<span class="sync-dot"></span> Authenticating...';
+    function renderToasts() {
+      if (!toasts.length) return "";
+      return `<div class="toast-wrap">${toasts.map(t => `<div class="toast ${t.type}">${escapeHtml(t.msg)}</div>`).join("")}</div>`;
     }
-    if(err) err.style.display = "none";
 
-    try {
-      if(window.DevkaCloud && typeof window.DevkaCloud.adminSignIn === "function"){
-        const res = await window.DevkaCloud.adminSignIn(u, p);
-        session = {
-          username: res.user.email || u,
-          uid: res.user.uid,
-          displayName: res.user.displayName,
-          loggedInAt: Date.now()
-        };
-        sessionStorage.setItem("devka_admin_session", JSON.stringify(session));
-        showToast("Admin Authentication verified! Welcome back.", "success");
-        if (window.VendorDB && typeof window.VendorDB.connectCloudSync === "function") {
-          window.VendorDB.connectCloudSync();
-        }
-        await refreshVendors();
-        render();
-      } else {
-        throw new Error("Cloud security module is initializing. Please try again in a moment.");
-      }
-    } catch(authErr){
-      console.warn("Admin Auth failed:", authErr.message);
-      if(err){
-        err.textContent = authErr.message || "Invalid Admin credentials.";
-        err.style.display = "block";
-      }
-    } finally {
-      if(btn){
-        btn.disabled = false;
-        btn.textContent = "Log In to Admin Vendor";
-      }
-    }
-  });
-}
+    // ---------------- EVENT ATTACHMENTS ---------------- //
+    function attachLoginEvents() {
+      const form = document.getElementById("admin-login-form");
+      if (!form) return;
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const u = document.getElementById("admin-user").value.trim();
+        const p = document.getElementById("admin-pass").value;
+        const err = document.getElementById("login-error");
+        const btn = document.getElementById("admin-submit-btn");
 
-function attachExplorerEvents(){
-  const app = document.getElementById("admin-app");
-
-  // Search input
-  const searchEl = document.getElementById("explorer-search");
-  if(searchEl){
-    searchEl.addEventListener("input", (e) => {
-      filters.search = e.target.value;
-      render();
-    });
-  }
-
-  // Filter pills
-  app.querySelectorAll("[data-filter-type]").forEach(el => {
-    el.addEventListener("click", () => {
-      filters.type = el.getAttribute("data-filter-type");
-      render();
-    });
-  });
-
-  app.querySelectorAll("[data-filter-status]").forEach(el => {
-    el.addEventListener("click", () => {
-      filters.status = el.getAttribute("data-filter-status");
-      render();
-    });
-  });
-
-  // Folder open
-  app.querySelectorAll("[data-open-folder]").forEach(el => {
-    el.addEventListener("click", () => {
-      currentFolderId = el.getAttribute("data-open-folder");
-      currentTab = "docs";
-      render();
-    });
-  });
-
-  // Tab switches inside folder
-  app.querySelectorAll("[data-tab]").forEach(el => {
-    el.addEventListener("click", () => {
-      currentTab = el.getAttribute("data-tab");
-      render();
-    });
-  });
-
-  // Actions
-  app.querySelectorAll("[data-action]").forEach(el => {
-    el.addEventListener("click", (e) => {
-      const action = el.getAttribute("data-action");
-      handleAction(action, el, e);
-    });
-  });
-}
-
-async function handleAction(action, el, ev){
-  if(action === "logout"){
-    if(window.DevkaCloud && typeof window.DevkaCloud.adminSignOut === "function"){
-      try { await window.DevkaCloud.adminSignOut(); } catch(e){}
-    }
-    session = null;
-    sessionStorage.removeItem("devka_admin_session");
-    currentFolderId = null;
-    showToast("Signed out securely.", "neutral");
-    render();
-  }
-  else if(action === "go-root"){
-    currentFolderId = null;
-    render();
-  }
-  else if(action === "refresh"){
-    await refreshVendors();
-    showToast("Vendors list refreshed.", "neutral");
-  }
-  else if(action === "reset-filters"){
-    filters = { search: "", type: "all", status: "all" };
-    render();
-  }
-  else if(action === "export-json"){
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(vendors, null, 2));
-    const a = document.createElement("a");
-    a.href = dataStr;
-    a.download = `Devka_Vendors_Registry_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    showToast("Vendor registry exported.", "success");
-  }
-  else if(action === "set-status"){
-    const newStatus = el.getAttribute("data-status");
-    const v = vendors.find(x => x.id === currentFolderId);
-    if(v){
-      v.status = newStatus;
-      try {
-        await fetch(`${SUPABASE_REST_URL}/vendors?id=eq.${encodeURIComponent(v.id)}`, {
-          method: "PATCH",
-          headers: {
-            "apikey": SUPABASE_ADMIN_SECRET,
-            "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`,
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify({ status: newStatus, updated_at: Date.now() })
-        });
-      } catch (e) {}
-      if (window.VendorDB) try { await window.VendorDB.saveVendor(v); } catch(e) {}
-      await refreshVendors();
-      showToast(`Folder status updated to "${newStatus}"`, "success");
-    }
-  }
-  else if(action === "delete-vendor"){
-    if(confirm("Are you sure you want to delete this vendor folder completely?")){
-      try {
-        await fetch(`${SUPABASE_REST_URL}/vendors?id=eq.${encodeURIComponent(currentFolderId)}`, {
-          method: "DELETE",
-          headers: {
-            "apikey": SUPABASE_ADMIN_SECRET,
-            "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`
+        if (!u || !p) {
+          if (err) {
+            err.textContent = "Please provide both User ID / Email and Password.";
+            err.style.display = "block";
           }
+          return;
+        }
+
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = '<span class="sync-dot"></span> Authenticating...';
+        }
+        if (err) err.style.display = "none";
+
+        try {
+          if (window.DevkaCloud && typeof window.DevkaCloud.adminSignIn === "function") {
+            const res = await window.DevkaCloud.adminSignIn(u, p);
+            session = {
+              username: res.user.email || u,
+              uid: res.user.uid,
+              displayName: res.user.displayName,
+              token: res.user.token,
+              refreshToken: res.user.refreshToken,
+              loggedInAt: Date.now()
+            };
+            sessionStorage.setItem("devka_admin_session", JSON.stringify(session));
+            showToast("Admin Authentication verified! Welcome back.", "success");
+            if (window.VendorDB && typeof window.VendorDB.connectCloudSync === "function") {
+              window.VendorDB.connectCloudSync();
+            }
+            await refreshVendors();
+            render();
+          } else {
+            throw new Error("Cloud security module is initializing. Please try again in a moment.");
+          }
+        } catch (authErr) {
+          console.warn("Admin Auth failed:", authErr.message);
+          if (err) {
+            err.textContent = authErr.message || "Invalid Admin credentials.";
+            err.style.display = "block";
+          }
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = "Log In to Admin Vendor";
+          }
+        }
+      });
+    }
+
+    function attachExplorerEvents() {
+      const app = document.getElementById("admin-app");
+
+      // Search input
+      const searchEl = document.getElementById("explorer-search");
+      if (searchEl) {
+        searchEl.addEventListener("input", (e) => {
+          filters.search = e.target.value;
+          render();
         });
-      } catch (e) {}
-      if (window.VendorDB) try { await window.VendorDB.deleteVendor(currentFolderId); } catch(e) {}
-      currentFolderId = null;
-      await refreshVendors();
-      showToast("Vendor folder deleted.", "neutral");
-    }
-  }
-  else if(action === "save-notes"){
-    const txt = document.getElementById("folder-admin-notes")?.value || "";
-    const v = vendors.find(x => x.id === currentFolderId);
-    if(v){
-      v.adminNotes = txt;
-      try {
-        await fetch(`${SUPABASE_REST_URL}/vendors?id=eq.${encodeURIComponent(v.id)}`, {
-          method: "PATCH",
-          headers: {
-            "apikey": SUPABASE_ADMIN_SECRET,
-            "Authorization": `Bearer ${SUPABASE_ADMIN_SECRET}`,
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify({ admin_notes: txt, updated_at: Date.now() })
+      }
+
+      // Filter pills
+      app.querySelectorAll("[data-filter-type]").forEach(el => {
+        el.addEventListener("click", () => {
+          filters.type = el.getAttribute("data-filter-type");
+          render();
         });
-      } catch (e) {}
-      if (window.VendorDB) try { await window.VendorDB.saveVendor(v); } catch(e) {}
-      showToast("Notes saved to vendor folder.", "success");
+      });
+
+      app.querySelectorAll("[data-filter-status]").forEach(el => {
+        el.addEventListener("click", () => {
+          filters.status = el.getAttribute("data-filter-status");
+          render();
+        });
+      });
+
+      // Folder open
+      app.querySelectorAll("[data-open-folder]").forEach(el => {
+        el.addEventListener("click", () => {
+          currentFolderId = el.getAttribute("data-open-folder");
+          currentTab = "docs";
+          render();
+        });
+      });
+
+      // Tab switches inside folder
+      app.querySelectorAll("[data-tab]").forEach(el => {
+        el.addEventListener("click", () => {
+          currentTab = el.getAttribute("data-tab");
+          render();
+        });
+      });
+
+      // Actions
+      app.querySelectorAll("[data-action]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          const action = el.getAttribute("data-action");
+          handleAction(action, el, e);
+        });
+      });
     }
-  }
-  else if(action === "preview-file"){
-    const key = el.getAttribute("data-key");
-    const v = vendors.find(x => x.id === currentFolderId);
-    if(v && v.documents && v.documents[key]){
-      previewDoc = v.documents[key];
+
+    async function handleAction(action, el, ev) {
+      if (action === "logout") {
+        if (window.DevkaCloud && typeof window.DevkaCloud.adminSignOut === "function") {
+          try { await window.DevkaCloud.adminSignOut(); } catch (e) { }
+        }
+        session = null;
+        sessionStorage.removeItem("devka_admin_session");
+        currentFolderId = null;
+        showToast("Signed out securely.", "neutral");
+        render();
+      }
+      else if (action === "go-root") {
+        currentFolderId = null;
+        render();
+      }
+      else if (action === "refresh") {
+        await refreshVendors();
+        showToast("Vendors list refreshed.", "neutral");
+      }
+      else if (action === "reset-filters") {
+        filters = { search: "", type: "all", status: "all" };
+        render();
+      }
+      else if (action === "export-json") {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(vendors, null, 2));
+        const a = document.createElement("a");
+        a.href = dataStr;
+        a.download = `Devka_Vendors_Registry_${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        showToast("Vendor registry exported.", "success");
+      }
+      else if (action === "set-status") {
+        const newStatus = el.getAttribute("data-status");
+        const v = vendors.find(x => x.id === currentFolderId);
+        if (v) {
+          v.status = newStatus;
+          if (window.VendorDB && typeof window.VendorDB.saveVendor === "function") {
+            try { await window.VendorDB.saveVendor(v); } catch (e) { }
+          }
+          await refreshVendors();
+          showToast(`Folder status updated to "${newStatus}"`, "success");
+        }
+      }
+      else if (action === "delete-vendor") {
+        if (confirm("Are you sure you want to delete this vendor folder completely?")) {
+          if (window.VendorDB && typeof window.VendorDB.deleteVendor === "function") {
+            try { await window.VendorDB.deleteVendor(currentFolderId); } catch (e) { }
+          }
+          currentFolderId = null;
+          await refreshVendors();
+          showToast("Vendor folder deleted.", "neutral");
+        }
+      }
+      else if (action === "save-notes") {
+        const txt = document.getElementById("folder-admin-notes")?.value || "";
+        const v = vendors.find(x => x.id === currentFolderId);
+        if (v) {
+          v.adminNotes = txt;
+          if (window.VendorDB && typeof window.VendorDB.saveVendor === "function") {
+            try { await window.VendorDB.saveVendor(v); } catch (e) { }
+          }
+          showToast("Notes saved to vendor folder.", "success");
+        }
+      }
+      else if (action === "preview-file") {
+        const key = el.getAttribute("data-key");
+        const v = vendors.find(x => x.id === currentFolderId);
+        if (v && v.documents && v.documents[key]) {
+          previewDoc = v.documents[key];
+          render();
+        }
+      }
+      else if (action === "close-preview") {
+        previewDoc = null;
+        render();
+      }
+      else if (action === "download-file") {
+        const key = el.getAttribute("data-key");
+        const v = vendors.find(x => x.id === currentFolderId);
+        if (v && v.documents && v.documents[key]) {
+          downloadDoc(v.documents[key]);
+        }
+      }
+      else if (action === "download-preview-file") {
+        if (previewDoc) {
+          downloadDoc(previewDoc);
+        }
+      }
+      else if (action === "download-vendor-pdf") {
+        const v = vendors.find(x => x.id === currentFolderId);
+        if (v) {
+          window.downloadVendorPdf(v);
+          showToast("Downloading official filled registration PDF...", "success");
+        }
+      }
+      else if (action === "print-dossier") {
+        window.print();
+      }
+    }
+
+    function downloadDoc(doc) {
+      if (doc.url) {
+        const a = document.createElement("a");
+        a.href = doc.url;
+        a.target = "_blank";
+        a.download = doc.name || "document";
+        a.click();
+        showToast(`Opening / Downloading ${doc.name}...`, "success");
+        return;
+      }
+      if (doc.data && doc.data.startsWith("data:")) {
+        const a = document.createElement("a");
+        a.href = doc.data;
+        a.download = doc.name || "document";
+        a.click();
+        showToast(`Downloading ${doc.name}...`, "success");
+      } else {
+        const blob = new Blob([`Devka Beach Resort — Document Attachment\nDocument Name: ${doc.name}\nSize: ${doc.size} bytes\nType: ${doc.type}\nStored in Folder: ${currentFolderId}`], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = (doc.name || "document") + ".txt";
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast(`Downloading file metadata for ${doc.name}`, "neutral");
+      }
+    }
+
+    function escapeHtml(s) {
+      return (s || "").toString().replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+    function fmtBytes(b) {
+      if (!b) return "0 B";
+      if (b < 1024) return b + " B";
+      if (b < 1024 * 1024) return (b / 1024).toFixed(1) + " KB";
+      return (b / 1024 / 1024).toFixed(2) + " MB";
+    }
+
+    // Initial Boot with real-time Firebase listener
+    (async function init() {
+      window.addEventListener("devka_vendor_updated", async () => {
+        if (session) {
+          await refreshVendors();
+          render();
+        }
+      });
+      window.addEventListener("storage", async (e) => {
+        if ((e.key === "devka_vendors_last_sync" || e.key === "devka_vendors_registry") && session) {
+          await refreshVendors();
+          render();
+        }
+      });
+
+      if (session) {
+        await refreshVendors();
+      }
       render();
-    }
-  }
-  else if(action === "close-preview"){
-    previewDoc = null;
-    render();
-  }
-  else if(action === "download-file"){
-    const key = el.getAttribute("data-key");
-    const v = vendors.find(x => x.id === currentFolderId);
-    if(v && v.documents && v.documents[key]){
-      downloadDoc(v.documents[key]);
-    }
-  }
-  else if(action === "download-preview-file"){
-    if(previewDoc){
-      downloadDoc(previewDoc);
-    }
-  }
-  else if(action === "download-vendor-pdf"){
-    const v = vendors.find(x => x.id === currentFolderId);
-    if(v){
-      window.downloadVendorPdf(v);
-      showToast("Downloading official filled registration PDF...", "success");
-    }
-  }
-  else if(action === "print-dossier"){
-    window.print();
-  }
-}
-
-function downloadDoc(doc){
-  if(doc.url){
-    const a = document.createElement("a");
-    a.href = doc.url;
-    a.target = "_blank";
-    a.download = doc.name || "document";
-    a.click();
-    showToast(`Opening / Downloading ${doc.name}...`, "success");
-    return;
-  }
-  if(doc.data && doc.data.startsWith("data:")){
-    const a = document.createElement("a");
-    a.href = doc.data;
-    a.download = doc.name || "document";
-    a.click();
-    showToast(`Downloading ${doc.name}...`, "success");
-  } else {
-    const blob = new Blob([`Devka Beach Resort — Document Attachment\nDocument Name: ${doc.name}\nSize: ${doc.size} bytes\nType: ${doc.type}\nStored in Folder: ${currentFolderId}`], {type:"text/plain"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = (doc.name || "document") + ".txt";
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    showToast(`Downloading file metadata for ${doc.name}`, "neutral");
-  }
-}
-
-function escapeHtml(s){
-  return (s||"").toString().replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function fmtBytes(b){
-  if(!b) return "0 B";
-  if(b<1024) return b+" B";
-  if(b<1024*1024) return (b/1024).toFixed(1)+" KB";
-  return (b/1024/1024).toFixed(2)+" MB";
-}
-
-// Initial Boot with real-time Firebase listener
-(async function init(){
-  window.addEventListener("devka_vendor_updated", async () => {
-    if(session){
-      await refreshVendors();
-      render();
-    }
-  });
-  window.addEventListener("storage", async (e) => {
-    if((e.key === "devka_vendors_last_sync" || e.key === "devka_vendors_registry") && session){
-      await refreshVendors();
-      render();
-    }
-  });
-
-  if(session){
-    await refreshVendors();
-  }
-  render();
-})();
-</script>
+    })();
+  </script>
 </body>
-</html>
 
+</html>
